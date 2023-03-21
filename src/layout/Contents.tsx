@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Counter from "@/components/Counter";
 import Input from "@/components/Input";
+import Calculator from "@/components/Calculator";
 
 const ContentsContainer = styled.main`
     height: 100%;
@@ -17,9 +18,10 @@ type Props = {
 function Contents({ contentsText }: Props) {
     return (
         <ContentsContainer>
-            {contentsText}
+            {/* {contentsText}
             <Counter />
-            <Input />
+            <Input /> */}
+            <Calculator />
         </ContentsContainer>
     );
 }
