@@ -8,3 +8,15 @@ yarn add @types/styled-components -D
 
 GlobalStyle.ts 는 전역적으로 적용할 style 에 대해서 적용
 내부 reset 은 기본으로 잡혀있는 css 초기화를 위해 사용
+
+## 3. useState
+
+## 4. 계산기 만들기
+
+## 5. 조건부 렌더링
+
+### - 팝업 띄우기 (falsy 개념 활용)
+
+### - 시계 (useEffect)
+
+### - Todo List (반복문)

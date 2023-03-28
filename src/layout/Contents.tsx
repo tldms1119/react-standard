@@ -2,6 +2,9 @@ import styled from "styled-components";
 import Counter from "@/components/Counter";
 import Input from "@/components/Input";
 import Calculator from "@/components/Calculator";
+import Popup from "@/components/Popup";
+import LiveClock from "@/components/LiveClock";
+import TodoList from "@/components/ToDoList";
 
 const ContentsContainer = styled.main`
     height: 100%;
@@ -21,7 +24,12 @@ function Contents({ contentsText }: Props) {
             {/* {contentsText}
             <Counter />
             <Input /> */}
-            <Calculator />
+            {/* <Calculator /> */}
+            <Popup content="팝업 내용" btnTitle="버튼 내용" />
+            <hr />
+            <LiveClock />
+            <hr />
+            <TodoList />
         </ContentsContainer>
     );
 }
