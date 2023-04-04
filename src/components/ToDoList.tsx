@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 
 const InputArea = styled.div`
@@ -71,6 +71,11 @@ const AddButton = styled(Button)`
     color: #fff;
 `;
 
+const EditButton = styled(Button)`
+    background-color: #f5dd09;
+    color: #fff;
+`;
+
 const DeleteButton = styled(Button)`
     background-color: #dc3545;
     color: #fff;
@@ -89,54 +94,112 @@ const Input = styled.input`
     }
 `;
 
+type Item = {
+    completed: boolean;
+    task: string;
+};
+
+const sampleList = [
+    { completed: false, task: "React" },
+    { completed: false, task: "AWS" },
+    { completed: false, task: "DevOps" },
+];
+
 /**
  * @description 할 일 목록
  */
 function TodoList() {
     // state
-    const [list, setList] = useState<string[]>(["a", "b", "c", "d"]);
     const [inputValue, setInputValue] = useState<string>("");
+    const [list, setList] = useState<Item[]>(sampleList);
 
     // event
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setInputValue(value);
+        setInputValue(e.target.value);
     };
-    // concat 은 원본 배열을 유지하면서 추가만 해줌
-    // 불변성의 원리를 지키기 위해 push를 사용하면 안된다는데 제대로 못들음
-    const onAddTask = () => {
+    const onAdd = () => {
         if (!inputValue) {
-            alert("할 일을 입력하세요.");
+            alert("할 일을 입력하세요");
             return;
         }
-        setList((prevList) => prevList.concat(inputValue));
+        // concat 은 원본 배열을 유지하면서 추가만 해줌
+        // setList((prevList) => {
+        //     const updateList = prevList.concat(inputValue);
+        //     return updateList;
+        // });
+        setList((prevList) => [
+            ...prevList,
+            { completed: false, task: inputValue },
+        ]);
         setInputValue("");
+    };
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault();
+    };
+    const onDelete = (idx: number) => {
+        setList((prevList) => prevList.filter((item, index) => index !== idx));
+    };
+    const onEdit = (idx: number) => {
+        const updateValue = prompt();
+
+        if (!updateValue) {
+            alert("할 일을 입력하세요");
+            return;
+        }
+
+        setList((prevList) => {
+            const updateList = prevList.map((item, index) => {
+                if (idx === index) {
+                    return { ...item, task: updateValue };
+                } else {
+                    return item;
+                }
+            });
+            return updateList;
+        });
+    };
+    const onCheck = (idx: number) => {
+        setList((prevList) => {
+            const updateList = prevList.map((item, index) => {
+                if (idx === index) {
+                    return { ...item, completed: !item.completed };
+                } else {
+                    return item;
+                }
+            });
+            return updateList;
+        });
     };
 
     // view
     return (
         <Wrapper>
             <Title>Todo List</Title>
-            {/* <form> */}
-            <InputArea>
-                <Input
-                    type="text"
-                    placeholder="할 일을 입력해주세요."
-                    value={inputValue}
-                    onChange={onChange}
-                />
-                <AddButton onClick={onAddTask}>Add</AddButton>
-            </InputArea>
-            {/* </form> */}
+            <form onSubmit={onSubmit}>
+                <InputArea>
+                    <Input
+                        type="text"
+                        placeholder="할 일을 입력해주세요."
+                        value={inputValue}
+                        onChange={onChange}
+                    />
+                    <AddButton onClick={onAdd}>Add</AddButton>
+                </InputArea>
+            </form>
             <TodoItems>
-                {list.map((item) => (
-                    <TodoItem>
+                {list.map((item, idx) => (
+                    <TodoItem key={idx}>
                         <Flex>
-                            <Checkbox />
-                            <Task completed={false}>{item}</Task>
+                            <Checkbox onClick={() => onCheck(idx)} />
+                            <Task completed={item.completed}>{item.task}</Task>
                         </Flex>
                         <div>
-                            <DeleteButton>Delete</DeleteButton>
+                            <EditButton onClick={() => onEdit(idx)}>
+                                Edit
+                            </EditButton>
+                            <DeleteButton onClick={() => onDelete(idx)}>
+                                Delete
+                            </DeleteButton>
                         </div>
                     </TodoItem>
                 ))}
