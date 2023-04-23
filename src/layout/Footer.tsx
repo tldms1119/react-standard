@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useLoginState } from "@/global/loginState";
 
 const FooterContainer = styled.footer`
     width: 100%;
@@ -14,7 +15,19 @@ type Props = {
  * @description Footer 컴포넌트
  */
 function Footer({ footerText }: Props) {
-    return <FooterContainer>{footerText}</FooterContainer>;
+    // global State
+    // const [loginInfo] = useRecoilState(loginState);
+
+    // custom Hook
+    const { login, setLogin } = useLoginState();
+    return (
+        <FooterContainer>
+            <h2>
+                {footerText}
+                <p>{login.userId}</p>
+            </h2>
+        </FooterContainer>
+    );
 }
 
 export default Footer;

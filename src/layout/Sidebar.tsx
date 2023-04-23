@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
+import { useLoginState } from "@/global/loginState";
 
 const SidebarContainer = styled.div`
     position: fixed;
@@ -25,9 +26,17 @@ type Props = {
  * @description sidebar 컴포넌트
  */
 function Sidebar({ title, description }: Props) {
+
+    // global State
+    // const [loginInfo] = useRecoilState(loginState);
+
+    // custom hook
+    const { login, setLogin } = useLoginState();
+
     return (
         <SidebarContainer>
             <h2>Sidebar</h2>
+            <h2>{login.userId}</h2>
             <ul>
                 <li>
                     {/* NavLink로 클릭 스타일 효과 줄 수 있음 */}
@@ -80,6 +89,19 @@ function Sidebar({ title, description }: Props) {
                         }}
                     >
                         ToDoList
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="input"
+                        style={({ isActive, isPending }) => {
+                            return {
+                                fontWeight: isActive ? "bold" : "",
+                                color: isPending ? "red" : "black",
+                            };
+                        }}
+                    >
+                        Input
                     </NavLink>
                 </li>
             </ul>
