@@ -4,6 +4,7 @@ import Contents from "@/layout/Contents";
 import Footer from "@/layout/Footer";
 import styled from "styled-components";
 import GlobalStyle from "@/styles/GlobalStyle";
+import useAxiosInterceptor from "./hook/useAxiosInterceptor";
 
 const AppContainer = styled.div`
     display: flex;
@@ -13,6 +14,9 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+    // hook
+    useAxiosInterceptor(); // 인터셉터 등록
+
     return (
         <>
             <GlobalStyle />
@@ -20,7 +24,7 @@ function App() {
                 <Header title="raccoon" description="React Header" />
                 <Sidebar title="Sidebar" description="Layout" />
                 <Contents title="Contents" description={100} />
-                <Footer footerText="Footer"/>
+                <Footer footerText="Footer" />
             </AppContainer>
         </>
     );

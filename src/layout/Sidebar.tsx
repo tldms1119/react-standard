@@ -12,7 +12,7 @@ const SidebarContainer = styled.div`
 
     li {
         font-size: 1.5em;
-        margin-top: 100px;
+        margin-top: 80px;
         padding-left: 20px;
     }
 `;
@@ -26,7 +26,6 @@ type Props = {
  * @description sidebar 컴포넌트
  */
 function Sidebar({ title, description }: Props) {
-
     // global State
     // const [loginInfo] = useRecoilState(loginState);
 
@@ -102,6 +101,19 @@ function Sidebar({ title, description }: Props) {
                         }}
                     >
                         Input
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="board"
+                        style={({ isActive, isPending }) => {
+                            return {
+                                fontWeight: isActive ? "bold" : "",
+                                color: isPending ? "red" : "black",
+                            };
+                        }}
+                    >
+                        Board
                     </NavLink>
                 </li>
             </ul>
