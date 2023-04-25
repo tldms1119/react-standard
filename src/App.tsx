@@ -17,10 +17,10 @@ function App() {
         <>
             <GlobalStyle />
             <AppContainer>
-                <Header title="raccoon" />
-                <Sidebar sidebarText="sidebar Text" />
-                <Contents contentsText="contents Text" />
-                <Footer footerText="footer Text" />
+                <Header title="raccoon" description="React Header" />
+                <Sidebar title="Sidebar" description="Layout" />
+                <Contents title="Contents" description={100} />
+                <Footer footerText="Footer"/>
             </AppContainer>
         </>
     );

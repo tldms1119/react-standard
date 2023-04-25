@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useLoginState } from "@/global/loginState";
 
 const HeaderContainer = styled.header`
     width: 100%;
@@ -15,13 +16,17 @@ type Props = {
  * @description Header 컴포넌트
  */
 function Header({ title, description }: Props) {
-    // script
+    // global State
+    // const [loginInfo] = useRecoilState(loginState);
+
+    // custom hook
+    const { login, setLogin } = useLoginState();
 
     // view
     return (
         <HeaderContainer>
             <h1>{title}</h1>
-            <h1>{description}</h1>
+            <h1>{login.userId}</h1>
         </HeaderContainer>
     );
 }
